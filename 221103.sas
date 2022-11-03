@@ -1,9 +1,9 @@
 *----------------------------------*
-l      SAS Programming ±³À° (^0^)       l
+l      SAS Programming êµìœ¡ (^0^)  l
 *----------------------------------*;
 /*===================22.11.03================*/
 
-/*¶óÀÌºê·¯¸® ÇÒ´ç*/
+/*ë¼ì´ë¸ŒëŸ¬ë¦¬ í• ë‹¹*/
 libname orion v9 'c:\educ\p12' ;
 libname educ "c:\educ" ;
 libname orionx xlsx 'c:\educ\p12\sales.xlsx' ;
@@ -16,55 +16,55 @@ proc print data=orion.nonsales (obs=10) ;
 run;
 
 data work.comp;
-	set orion.nonsales ; /*º¯¼ö 9°³*/
+	set orion.nonsales ; /*ë³€ìˆ˜ 9ê°œ*/
 	bonus = 500 ;
-	comp = salary + bonus ; /*¹®Àå ¼ø¼­ Áß¿ä!*/
+	comp = salary + bonus ; /*ë¬¸ì¥ ìˆœì„œ ì¤‘ìš”!*/
 	bmonth = month(hire_date) ;
 	
 	drop first last  ;
 run;
 
-/*ÇÔ¼ö*/
-/*missing value ¹«½Ã
+/*í•¨ìˆ˜*/
+/*missing value ë¬´ì‹œ
 	sum(1,2,3) = 6
 	sum(1,2,.) = 3
 	mean(1,2,3) = 2
 	mean(1,2,.) = 1.5 */
 
 data work.comp;
-	set orion.nonsales ; /*º¯¼ö 9°³*/
+	set orion.nonsales ; /*ë³€ìˆ˜ 9ê°œ*/
 	bonus = 500 ;
-	comp = sum(salary, bonus) ; /*missing value ¹«½Ã*/
+	comp = sum(salary, bonus) ; /*missing value ë¬´ì‹œ*/
 	bmonth = month(hire_date) ;
 	drop first last  ;
 run;
 
-/*³ªÀÌ ±¸ÇÏ±â+º¸³Ê½º µ¥ÀÌ*/
+/*ë‚˜ì´ êµ¬í•˜ê¸°+ë³´ë„ˆìŠ¤ ë°ì´*/
 data work.comp;
-	set orion.nonsales ; /*º¯¼ö 9°³*/
+	set orion.nonsales ; /*ë³€ìˆ˜ 9ê°œ*/
 	bonus = 500 ;
-	comp = sum(salary, bonus) ; /*missing value ¹«½Ã*/
+	comp = sum(salary, bonus) ; /*missing value ë¬´ì‹œ*/
 	bmonth = month(hire_date) ;
 	pay_day = mdy(bmonth,15,year(today())) ; 
 	/*
 	mdy
 	0 = '01jan1960'd = mdy(1,1,1996)
 	*/
-	age = ceil((today()-birth_date ) / 365.25) ; /*ceil = ¿Ã¸²*/
+	age = ceil((today()-birth_date ) / 365.25) ; /*ceil = ì˜¬ë¦¼*/
 	age2 = (year(today())-year(birth_date)) ;
 	format pay_day yymmdd10. ;
 	drop first last  ;
 run;
 
-/*³ª¶óº° º¸³Ê½º*/
-/*ÄÄÆÄÀÏ -> PDV(ÀÌ¸§/Å¸ÀÔ/±æÀÌ) -> E(°ª)*/
-/*do ¹®Àå end : ¹®Àå ½ÇÇà*/
-/*¹®ÀÚº¯¼ö ¸¸µé¶© Å©±â¿¡ ´ëÇÑ Á¤ÀÇ ÇÊ¿ä !! Áß¿ä! */
+/*ë‚˜ë¼ë³„ ë³´ë„ˆìŠ¤*/
+/*ì»´íŒŒì¼ -> PDV(ì´ë¦„/íƒ€ì…/ê¸¸ì´) -> E(ê°’)*/
+/*do ë¬¸ì¥ end : ë¬¸ì¥ ì‹¤í–‰*/
+/*ë¬¸ìë³€ìˆ˜ ë§Œë“¤ë• í¬ê¸°ì— ëŒ€í•œ ì •ì˜ í•„ìš” !! ì¤‘ìš”! */
 data work.comp2 ;
 	set orion.nonsales;
-	/*if Á¶°Ç then ½ÇÇà ¹®Àå*/
-	length check $ 7 ; /*º¯¼ö Å©±â ¼³Á¤*/
-	if upcase(country) ='AU' /*upcase :´ë¹®ÀÚ Ä¡È¯*/ then do ; 
+	/*if ì¡°ê±´ then ì‹¤í–‰ ë¬¸ì¥*/
+	length check $ 7 ; /*ë³€ìˆ˜ í¬ê¸° ì„¤ì •*/
+	if upcase(country) ='AU' /*upcase :ëŒ€ë¬¸ì ì¹˜í™˜*/ then do ; 
 		bonus =100 ; 
 		check = 'Type I'; 
 	end; 
@@ -78,7 +78,7 @@ data work.comp2 ;
 	keep Employee_ID Country Salary bonus comp check;
 run ;
 
-/*¿¬½À¹®Á¦ P5-35. 3¹ø*/
+/*ì—°ìŠµë¬¸ì œ P5-35. 3ë²ˆ*/
 proc contents data=orion.customer_dim varnum;
 run;
 proc print data=orion.customer_dim (obs=10);
@@ -89,7 +89,7 @@ data work.season;
 
 	c_qtr = qtr(customer_birthdate) ;
 
-	length promo promo2 $ 10 ; /*º¯¼ö ±æÀÌ*/ 
+	length promo promo2 $ 10 ; /*ë³€ìˆ˜ ê¸¸ì´*/ 
 
 	if c_qtr = 1 then promo='Winter' ;
 	else if c_qtr = 2 then promo='Spring' ;
@@ -102,20 +102,20 @@ data work.season;
 	keep Customer_ID Customer_BirthDate Customer_Age promo promo2;
 	format Customer_BirthDate yymmdd10. ;
 run ;
-/*Á¶°Ç Á¤È®ÇÏ°Ô ³¡±îÁö ÁÖ±â missing value °í·Á*/
+/*ì¡°ê±´ ì •í™•í•˜ê²Œ ëê¹Œì§€ ì£¼ê¸° missing value ê³ ë ¤*/
 	
 
 
 /*==================[Chapter6]==================*/
 /*combining data set*/
-/*¿©·¯ µ¥ÀÌÅÍ´Â set ¹®Àå¿¡ ³ª¿­*/
+/*ì—¬ëŸ¬ ë°ì´í„°ëŠ” set ë¬¸ì¥ì— ë‚˜ì—´*/
 
-/*¿¬½À¹®Á¦ p.6-23*/
+/*ì—°ìŠµë¬¸ì œ p.6-23*/
 data work.allemp_1980 ;
  set orion.sales orion.nonsales(rename=(first=first_name last=last_name)) ; 
- /*rename À¸·Î º¯¼ö ÀÌ¸§ ¸ÂÃç¼­ ÇÕÄ¡±â*/
+ /*rename ìœ¼ë¡œ ë³€ìˆ˜ ì´ë¦„ ë§ì¶°ì„œ í•©ì¹˜ê¸°*/
  bonus = salary * 0.1 ;
- where Hire_Date > '01jan1980'd /* ¶Ç´Â mdy(1,1,1980) */ ;
+ where Hire_Date > '01jan1980'd /* ë˜ëŠ” mdy(1,1,1980) */ ;
  keep Employee_ID First_Name Last_Name Salary bonus Hire_Date ;
  format Hire_Date yymmdd10. ;
 run;
@@ -125,22 +125,22 @@ run;
 proc print data=work.allemp_1980 (obs=10);
 run;
 
-/*merge : ¿¬°áÇÒ º¯¼ö¿¡ ´ëÇÑ »çÀü Á¤·Ä
- Á¤·Ä -> °¡·Î °áÇÕ*/
-proc sort data=orion.order_fact out=work.order_fact /*µû·Î ¸¸µé±â ¿øº»¾÷µ¥ÀÌÆ® ÁÖÀÇ!*/;
+/*merge : ì—°ê²°í•  ë³€ìˆ˜ì— ëŒ€í•œ ì‚¬ì „ ì •ë ¬
+ ì •ë ¬ -> ê°€ë¡œ ê²°í•©*/
+proc sort data=orion.order_fact out=work.order_fact /*ë”°ë¡œ ë§Œë“¤ê¸° ì›ë³¸ì—…ë°ì´íŠ¸ ì£¼ì˜!*/;
 	by Customer_ID ;
 run ;
-/*¿øº» ¾÷µ¥ÀÌÆ® ÁÖÀÇ!!*/
+/*ì›ë³¸ ì—…ë°ì´íŠ¸ ì£¼ì˜!!*/
 
 proc sort data=orion.customer_dim out=work.customer_dim ;
 	by Customer_id ;
 run ;
 
-/*merge by : ¿·À¸·Î ¿¬°á*/
+/*merge by : ì˜†ìœ¼ë¡œ ì—°ê²°*/
 
 data work.order_cust;
- merge work.order_fact work.customer_dim; /*¸ÅÄª µ¥ÀÌÅÍ !!¸ÅÄª±âÁØ º¯¼ö·Î Á¤·ÄÀ» ÇØ¾ßÇÔ!!*/
- by customer_id; /*¸ÅÄª ±âÁØ*/
+ merge work.order_fact work.customer_dim; /*ë§¤ì¹­ ë°ì´í„° !!ë§¤ì¹­ê¸°ì¤€ ë³€ìˆ˜ë¡œ ì •ë ¬ì„ í•´ì•¼í•¨!!*/
+ by customer_id; /*ë§¤ì¹­ ê¸°ì¤€*/
  country1 = upcase(customer_country) ;
  if country1 = 'US' then tax = total_retail_price * 0.3 ;
  else if country1 = 'AU' then tax = total_retail_price * 0.2 ;
@@ -154,27 +154,27 @@ proc print data=work.order_cust (obs=10);
 run;
 
 
-/*in µ¥ÀÌÅÍ À¯¹«*/
+/*in ë°ì´í„° ìœ ë¬´*/
 data work.order_cust;
- merge work.order_fact(in=ina) work.customer_dim(in=inb); /*¸ÅÄª µ¥ÀÌÅÍ !!¸ÅÄª±âÁØ º¯¼ö·Î Á¤·ÄÀ» ÇØ¾ßÇÔ!!*/
- by customer_id; /*¸ÅÄª ±âÁØ*/
+ merge work.order_fact(in=ina) work.customer_dim(in=inb); /*ë§¤ì¹­ ë°ì´í„° !!ë§¤ì¹­ê¸°ì¤€ ë³€ìˆ˜ë¡œ ì •ë ¬ì„ í•´ì•¼í•¨!!*/
+ by customer_id; /*ë§¤ì¹­ ê¸°ì¤€*/
 
  /*if ina=1 and inb=1;*/
  if ina=0 and inb=1;
 run;
 
-/* 3°³ data ¸¸µé±â
-°Å·¡=1 and °í°´ =1 => order_cust
-°Å·¡=0 and °í°´ =1 => noorder
-°Å·¡=1 and °í°´ =0 => nocust
+/* 3ê°œ data ë§Œë“¤ê¸°
+ê±°ë˜=1 and ê³ ê° =1 => order_cust
+ê±°ë˜=0 and ê³ ê° =1 => noorder
+ê±°ë˜=1 and ê³ ê° =0 => nocust
 */
 data work.order_cust work.noorder work.nocust ;
- merge work.order_fact(in=ina) work.customer_dim(in=inb); /*¸ÅÄª µ¥ÀÌÅÍ !!¸ÅÄª±âÁØ º¯¼ö·Î Á¤·ÄÀ» ÇØ¾ßÇÔ!!*/
- by customer_id; /*¸ÅÄª ±âÁØ*/
- if ina=1 and inb=1 then output work.order_cust; /*2. output¼öµ¿Ãâ·Â : PDV °ø°£ÀÇ ³»¿ëÀ» Ãâ·Âµ¥ÀÌÅÍ·Î »ı¼º*/
+ merge work.order_fact(in=ina) work.customer_dim(in=inb); /*ë§¤ì¹­ ë°ì´í„° !!ë§¤ì¹­ê¸°ì¤€ ë³€ìˆ˜ë¡œ ì •ë ¬ì„ í•´ì•¼í•¨!!*/
+ by customer_id; /*ë§¤ì¹­ ê¸°ì¤€*/
+ if ina=1 and inb=1 then output work.order_cust; /*2. outputìˆ˜ë™ì¶œë ¥ : PDV ê³µê°„ì˜ ë‚´ìš©ì„ ì¶œë ¥ë°ì´í„°ë¡œ ìƒì„±*/
  else if ina=0 and inb=1 then output work.noorder;
  else if ina=1 and inb=0 then output work.nocust;  
-run;/*output ½ÇÇà½Ã ÀÚµ¿Ãâ·Â(x) ÀÚµ¿¸®ÅÏ*/
+run;/*output ì‹¤í–‰ì‹œ ìë™ì¶œë ¥(x) ìë™ë¦¬í„´*/
 
 /*==================[Chapter7]==================*/
 proc contents data=orion.growth varnum;
@@ -182,7 +182,7 @@ run;
 proc print data=orion.growth (obs=10);
 run;
 
-/*1. OUTPUT ¼öµ¿Ãâ·Â : ¿©·¯°³ °üÃøÄ¡*/
+/*1. OUTPUT ìˆ˜ë™ì¶œë ¥ : ì—¬ëŸ¬ê°œ ê´€ì¸¡ì¹˜*/
 data forecast;
 	set orion.growth;
     year =1;
@@ -191,4 +191,4 @@ data forecast;
 	year =2;
 	total_employees = total_employees * (1+increase);
 	output ;
-run; /*ÀÚµ¿Ãâ·Â ÀÚµ¿¸®ÅÏ*/
+run; /*ìë™ì¶œë ¥ ìë™ë¦¬í„´*/
