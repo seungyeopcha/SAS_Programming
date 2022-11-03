@@ -1,35 +1,34 @@
 *----------------------------------*
-l               SAS Programming ±³À° :)             l
+l     SAS Programming êµìœ¡ :)       l
 *----------------------------------*;
-/
-*===================22.11.02================*/
+/*===================22.11.02================*/
 /*==================[Chapter3]==================*/
-/*-@ PROC CONTENTS : sas µ¥ÀÌÅÍ ¼Â ¼Ó¼º »ìÆìº¸±â*/
+/*-@ PROC CONTENTS : sas ë°ì´í„° ì…‹ ì†ì„± ì‚´í´ë³´ê¸°*/
 
 proc contents data=sashelp.class;
 run;
 
-*³»°¡ ÁöÁ¤ÇÑ º¯¼ö ¼ø¼­´ë·Î CONTENTS ½ÇÇà;
-proc contents data=sashelp.class varnum ; /*¹®Àå ¿É¼Ç :º¯¼ö ¼ø¼­´ë·Î*/;
+*ë‚´ê°€ ì§€ì •í•œ ë³€ìˆ˜ ìˆœì„œëŒ€ë¡œ CONTENTS ì‹¤í–‰;
+proc contents data=sashelp.class varnum ; /*ë¬¸ì¥ ì˜µì…˜ :ë³€ìˆ˜ ìˆœì„œëŒ€ë¡œ*/;
 run;
-/*·¹ÀÌºí : º¯¼ö¿¡ ´ëÇÑ ¼³¸í*/
+/*ë ˆì´ë¸” : ë³€ìˆ˜ì— ëŒ€í•œ ì„¤ëª…*/
 
-/*-@ DATA Portion : µ¥ÀÌÅÍ °ª º¸±â proc print*/
-proc print data=sashelp.class (obs=10) ; /*µ¥ÀÌÅÍ ¿É¼Ç : 10°³ °üÃøÄ¡ ÀĞ¾î¿À±â*/ ;
+/*-@ DATA Portion : ë°ì´í„° ê°’ ë³´ê¸° proc print*/
+proc print data=sashelp.class (obs=10) ; /*ë°ì´í„° ì˜µì…˜ : 10ê°œ ê´€ì¸¡ì¹˜ ì½ì–´ì˜¤ê¸°*/ ;
 run;
 
-/*-@ missing value ¹®ÀÚ = blank, ¼ıÀÚ = .*/
+/*-@ missing value ë¬¸ì = blank, ìˆ«ì = .*/
 
 /*
 -@ SAS Date Value
-1960³â 1¿ù 1ÀÏ =0 ºÎÅÍ ÇÏ·ç¾¿ +1
+1960ë…„ 1ì›” 1ì¼ =0 ë¶€í„° í•˜ë£¨ì”© +1
 */
 
 /*-@ SAS library*/
 
-/*-@ »ç¿ëÀÚ Á¤ÀÇ ¶óÀÌºê·¯¸® ÇÒ´ç
-    1. µ¥ÀÌÅÍ À§Ä¡ È®ÀÎ
-    2. sas ¶óÀÌºê·¯¸® ÂüÁ¶ ¸¸µé±â*/
+/*-@ ì‚¬ìš©ì ì •ì˜ ë¼ì´ë¸ŒëŸ¬ë¦¬ í• ë‹¹
+    1. ë°ì´í„° ìœ„ì¹˜ í™•ì¸
+    2. sas ë¼ì´ë¸ŒëŸ¬ë¦¬ ì°¸ì¡° ë§Œë“¤ê¸°*/
 /*LIBNAME libref "SAS-library' <options>;*/
 libname orion v9 'c:\educ\p12' ;
 libname educ "c:\educ" ;
@@ -40,7 +39,7 @@ run;
 proc print data=orion.sales (obs=10) ;
 run;
 
-/*-@ table ¸ğ¾çÀÇ µ¥ÀÌÅÍ ¿¢¼¿µ¥ÀÌÅÍ ¶óÀÌºê·¯¸® ÇÒ´ç*/
+/*-@ table ëª¨ì–‘ì˜ ë°ì´í„° ì—‘ì…€ë°ì´í„° ë¼ì´ë¸ŒëŸ¬ë¦¬ í• ë‹¹*/
 libname orionx xlsx 'c:\educ\p12\sales.xlsx' ;
 
 proc contents data=orionx.australia varnum;
@@ -49,41 +48,41 @@ run;
 proc print data=orionx.australia (obs=10) ;
 run; 
 
-/*¿À¶óÅ¬db db table »ç¿ë*/
+/*ì˜¤ë¼í´db db table ì‚¬ìš©*/
 libname ora_db oracle path=server userid= password= ; 
 
-/*text µ¥ÀÌÅÍ(csv)¸¦ SAS data set À¸·Î °¡Á®¿À±â*/
+/*text ë°ì´í„°(csv)ë¥¼ SAS data set ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°*/
 proc import datafile='c:\educ\p12\sales.csv' dbms=csv
-                 out=work.sales_csv replace /*µ¤¾î¾²±â*/ ;
+                 out=work.sales_csv replace /*ë®ì–´ì“°ê¸°*/ ;
 run;
 
 /*==================[Chapter4 : Reading SAS data sets]==================*/
 
 /*part1(p4-4)*/
 
-data work.subset1 /*Ãâ·Âµ¥ÀÌÅÍ*/;
-	set orion.sales ; /*ÀÔ·Âµ¥ÀÌÅÍ (¿ø·¡ÀÖ´ø ¿øµ¥ÀÌÅÍ)*/
-	where salary >= 30000 ; /*where ³í¸®, ºñ±³, »ê¼ú, Æ¯º° ¿¬»êÀÚ*/
+data work.subset1 /*ì¶œë ¥ë°ì´í„°*/;
+	set orion.sales ; /*ì…ë ¥ë°ì´í„° (ì›ë˜ìˆë˜ ì›ë°ì´í„°)*/
+	where salary >= 30000 ; /*where ë…¼ë¦¬, ë¹„êµ, ì‚°ìˆ , íŠ¹ë³„ ì—°ì‚°ì*/
 run;
 
-data work.subset1 /*Ãâ·Âµ¥ÀÌÅÍ*/;
-	set orion.sales ; /*ÀÔ·Âµ¥ÀÌÅÍ (¿ø·¡ÀÖ´ø ¿øµ¥ÀÌÅÍ)*/
+data work.subset1 /*ì¶œë ¥ë°ì´í„°*/;
+	set orion.sales ; /*ì…ë ¥ë°ì´í„° (ì›ë˜ìˆë˜ ì›ë°ì´í„°)*/
 	where country = 'AU'
 	and job_title contains 'Rep';
 run;
 
-data work.subset1 /*Ãâ·Âµ¥ÀÌÅÍ*/;
-	set orion.sales ; /*ÀÔ·Âµ¥ÀÌÅÍ (¿ø·¡ÀÖ´ø ¿øµ¥ÀÌÅÍ)*/
+data work.subset1 /*ì¶œë ¥ë°ì´í„°*/;
+	set orion.sales ; /*ì…ë ¥ë°ì´í„° (ì›ë˜ìˆë˜ ì›ë°ì´í„°)*/
 	where country = 'AU'
 	and salary >= 30000;
 run;
 
 /*
-# SASº¯¼ö
-				»ó¼ö°ª(°íÁ¤µÈ°ª)
-¹®ÀÚ º¯¼ö : "value" or 'value' ´Ü, °ª¿¡ ´ëÇÑ ´ë¼Ò¹®ÀÚ±¸ºĞ
-¼ıÀÚ º¯¼ö : value : ex.1234, 1234.5 ¼ıÀÚ »çÀÌ¿¡ Æ¯¼ö±âÈ£ »ç¿ë ¾ÈÇÔ(1,234 X)
-	- ³¯Â¥º¯¼ö : ³¯Â¥ »ó¼ö°ª
+# SASë³€ìˆ˜
+				ìƒìˆ˜ê°’(ê³ ì •ëœê°’)
+ë¬¸ì ë³€ìˆ˜ : "value" or 'value' ë‹¨, ê°’ì— ëŒ€í•œ ëŒ€ì†Œë¬¸ìêµ¬ë¶„
+ìˆ«ì ë³€ìˆ˜ : value : ex.1234, 1234.5 ìˆ«ì ì‚¬ì´ì— íŠ¹ìˆ˜ê¸°í˜¸ ì‚¬ìš© ì•ˆí•¨(1,234 X)
+	- ë‚ ì§œë³€ìˆ˜ : ë‚ ì§œ ìƒìˆ˜ê°’
 						0 = "01jan1960"d  (o) , '1960-01-01'd (X)
 */
 
@@ -92,77 +91,77 @@ data work.subset1;
 	set orion.sales ;
 	where country='AU'
 	and Job_Title ? 'Rep' /*contains = ?*/
-	and Hire_Date < '01jan2000'd ; /*³¯Â¥*/
+	and Hire_Date < '01jan2000'd ; /*ë‚ ì§œ*/
 run;
 
-/*»õ º¯¼ö ¸¸µé±â, ÇÒ´ç ¹®Àå*/
+/*ìƒˆ ë³€ìˆ˜ ë§Œë“¤ê¸°, í• ë‹¹ ë¬¸ì¥*/
 data work.subset1;
 	set orion.sales ;
 	where country='AU'
 	and Job_Title ? 'Rep'                
 	and Hire_Date < '01jan2000'd ;  
-	Bonus = salary *0.1;                 /*º¯¼ö¸í = Ç¥Çö½Ä*/
-	gender = upcase(gender) ;         /*±âÁ¸ º¯¼ö ¼öÁ¤*/     
+	Bonus = salary *0.1;                 /*ë³€ìˆ˜ëª… = í‘œí˜„ì‹*/
+	gender = upcase(gender) ;         /*ê¸°ì¡´ ë³€ìˆ˜ ìˆ˜ì •*/     
 run;
 
-/*°è»ê½Ä Áß ÇÏ³ª¶óµµ missing value ¸é missing value return*/
+/*ê³„ì‚°ì‹ ì¤‘ í•˜ë‚˜ë¼ë„ missing value ë©´ missing value return*/
 
 
 /*part3*/
-/*Drop : »©°í °¡Á®°¥ º¯¼öµé*//*Keep °¡Á®°¥ º¯¼ö ¹®Àå*/
+/*Drop : ë¹¼ê³  ê°€ì ¸ê°ˆ ë³€ìˆ˜ë“¤*//*Keep ê°€ì ¸ê°ˆ ë³€ìˆ˜ ë¬¸ì¥*/
 data work.subset1;
 	set orion.sales ;
 	where country='AU'
 	and Job_Title ? 'Rep'                
 	and Hire_Date < '01jan2000'd ;  
-	Bonus = salary *0.1;                 /*º¯¼ö¸í = Ç¥Çö½Ä*/
-	gender = upcase(gender) ;         /*±âÁ¸ º¯¼ö ¼öÁ¤*/ 
-	drop first_name Last_Name Country ;    /*Drop : »©°í °¡Á®°¥ º¯¼öµé*/
+	Bonus = salary *0.1;                 /*ë³€ìˆ˜ëª… = í‘œí˜„ì‹*/
+	gender = upcase(gender) ;         /*ê¸°ì¡´ ë³€ìˆ˜ ìˆ˜ì •*/ 
+	drop first_name Last_Name Country ;    /*Drop : ë¹¼ê³  ê°€ì ¸ê°ˆ ë³€ìˆ˜ë“¤*/
 run;
 
 /*DATA Step Processing*/
-/*À§¿¡¼­ ¹ØÀ¸·Î ½ÇÇà*/
+/*ìœ„ì—ì„œ ë°‘ìœ¼ë¡œ ì‹¤í–‰*/
 
 /*part4*/
 data work.auemps;
-	retain Employee_ID Salary bonus Hire_Date Birth_Date; /*º¯¼ö ¼ø¼­*/
+	retain Employee_ID Salary bonus Hire_Date Birth_Date; /*ë³€ìˆ˜ ìˆœì„œ*/
 	set orion.sales ;
 	where country in ('AU','au');
 	Bonus = salary *0.1;
 	keep Employee_ID Salary bonus Hire_Date Birth_Date; 
 run;
 
-/*where ¹®Àå¿¡ »ç¿ëµÇ´Â º¯¼ö´Â ¹İµå½Ã ÀÔ·Âµ¥ÀÌÅÍ(set)¿¡ Á¸Àç ÇØ¾ßÇÔ*/
+/*where ë¬¸ì¥ì— ì‚¬ìš©ë˜ëŠ” ë³€ìˆ˜ëŠ” ë°˜ë“œì‹œ ì…ë ¥ë°ì´í„°(set)ì— ì¡´ì¬ í•´ì•¼í•¨*/
 data work.auemps;
-	retain Employee_ID Salary bonus Hire_Date Birth_Date; /*º¯¼ö ¼ø¼­*/
+	retain Employee_ID Salary bonus Hire_Date Birth_Date; /*ë³€ìˆ˜ ìˆœì„œ*/
 	set orion.sales ;
 	where country in ('AU','au');
 	Bonus = salary *0.1;
-	if bonus >=3000; /*»ê¼ú/ºñ±³/³í¸® (Æ¯¼öx)*/
+	if bonus >=3000; /*ì‚°ìˆ /ë¹„êµ/ë…¼ë¦¬ (íŠ¹ìˆ˜x)*/
 	keep Employee_ID Salary bonus Hire_Date Birth_Date; 
 run;
 
 /*part5*/
 /*label, format*/
 
-/*label : º¯¼ö ¼³¸í*/
+/*label : ë³€ìˆ˜ ì„¤ëª…*/
 data work.auemps;
-	retain Employee_ID Salary bonus Hire_Date Birth_Date; /*º¯¼ö ¼ø¼­*/
+	retain Employee_ID Salary bonus Hire_Date Birth_Date; /*ë³€ìˆ˜ ìˆœì„œ*/
 	set orion.sales ;
 	where country in ('AU','au');
 
 	Bonus = salary *0.1;
-	if bonus >=3000; /*»ê¼ú/ºñ±³/³í¸® (Æ¯¼öx)*/
+	if bonus >=3000; /*ì‚°ìˆ /ë¹„êµ/ë…¼ë¦¬ (íŠ¹ìˆ˜x)*/
 
 	keep Employee_ID Salary bonus Hire_Date Birth_Date; 
-	label bonus='ÇöÀç ±Ş¿©ÀÇ 10%'; /*¶óº§*/
-	format salary comma10. bonus comma10.1 hire_date Birth_Date yymmdd10.; /*Æ÷¸Ë*/
+	label bonus='í˜„ì¬ ê¸‰ì—¬ì˜ 10%'; /*ë¼ë²¨*/
+	format salary comma10. bonus comma10.1 hire_date Birth_Date yymmdd10.; /*í¬ë§·*/
 run;
 
-/*¶óº§Àº °è¼Ó À¯Áö*/
+/*ë¼ë²¨ì€ ê³„ì† ìœ ì§€*/
 
 
-/*===p4-37 ¿¬½À¹®Á¦ 2¹ø*/
+/*===p4-37 ì—°ìŠµë¬¸ì œ 2ë²ˆ*/
 data work.delays;
 	set orion.orders;
  	where Delivery_Date > Order_Date +4
@@ -170,6 +169,6 @@ data work.delays;
 	order_month = month(order_date);
 	if order_month = 8;
 	keep Employee_ID Customer_ID Order_Date Delivery_Date Order_month;
-	label Order_month ='ÁÖ¹® ¿ù';
+	label Order_month ='ì£¼ë¬¸ ì›”';
 	format Order_Date Delivery_Date yymmdd10.;
 run;
