@@ -1,31 +1,31 @@
 *----------------------------------*
-l      SAS Programming ±³À° ¤Ğ.,¤Ğ          l
+l      SAS Programming êµìœ¡ ã… .,ã…   l
 *----------------------------------*;
 /*===================22.11.04================*/
-/*¶óÀÌºê·¯¸® ÇÒ´ç*/
+/*ë¼ì´ë¸ŒëŸ¬ë¦¬ í• ë‹¹*/
 libname orion v9 'c:\educ\p12' ;
 libname educ "c:\educ" ;
 libname orionx xlsx 'c:\educ\p12\sales.xlsx' ;
 
 
 /*==================[Chapter8]==================*/
-/*RETAIN ´©Àûº¯¼ö*/
+/*RETAIN ëˆ„ì ë³€ìˆ˜*/
 data acc1;
 	set orion.aprsales ;
 	retain m2t 0 ;
 	m2t = sum(saleamt , m2t) ;
 run;
 
-/*Sum ´©Àû º¯¼ö */
+/*Sum ëˆ„ì  ë³€ìˆ˜ */
 data acc1_1;
 	set orion.aprsales ;
 	m2t + saleamt ; /*sum*/
 	n +1 ;
 run;
 
-/*±×·ì º° ´©Àû*/
+/*ê·¸ë£¹ ë³„ ëˆ„ì */
 
-/*1) ±×·ìº° Á¤·Ä*/
+/*1) ê·¸ë£¹ë³„ ì •ë ¬*/
 proc sort data=orion.specialsals out=sorted ;
 	by dept ;
 run ;
@@ -33,17 +33,17 @@ run ;
 /*BY-Group*/
 data acc2 (keep=dept acc);
 	set work.sorted ;
-	by dept ; /*2) ±×·ì Ã³¸® º¯¼ö ÁöÁ¤ : first.dept , last.dept*/
-	if first.dept =1 then acc =0; /*3) ±×·ì³» Ã¹¹øÂ° °üÃøÄ¡ = 0 ¼¼ÆÃ*/
-	acc + salary ; /*4) °ª ´©Àû*/
-	if last.dept=1 then output ; /*±×·ì³» ¸¶Áö¸· °üÃøÄ¡ Ãâ·Â*/
+	by dept ; /*2) ê·¸ë£¹ ì²˜ë¦¬ ë³€ìˆ˜ ì§€ì • : first.dept , last.dept*/
+	if first.dept =1 then acc =0; /*3) ê·¸ë£¹ë‚´ ì²«ë²ˆì§¸ ê´€ì¸¡ì¹˜ = 0 ì„¸íŒ…*/
+	acc + salary ; /*4) ê°’ ëˆ„ì */
+	if last.dept=1 then output ; /*ê·¸ë£¹ë‚´ ë§ˆì§€ë§‰ ê´€ì¸¡ì¹˜ ì¶œë ¥*/
 run;
 
-/*2°³ ÀÌ»ó ±×·ì*/
+/*2ê°œ ì´ìƒ ê·¸ë£¹*/
 
 
-/*¹®Á¦*/
-/*1. ´ÜÀÏ ±×·ì*/
+/*ë¬¸ì œ*/
+/*1. ë‹¨ì¼ ê·¸ë£¹*/
 proc sort data=orion.order_fact (keep=Customer_ID order_type total_retail_price) out=order_sort ;
 	by Customer_ID ;
 run ;
@@ -60,7 +60,7 @@ data work.cust ;
 	keep customer_id cnt1 total1;
 run;
 
-/*2. 2°³ ±×·ì*/
+/*2. 2ê°œ ê·¸ë£¹*/
 proc sort data=orion.order_fact(keep=Customer_ID order_type total_retail_price) out=order_sort2 ;
 	by Customer_ID order_type;
 run ;
@@ -78,12 +78,12 @@ data work.cust_type ;
  	keep Customer_ID Order_Type cnt2 total2;
 run;
 
-/*2. Á¤´ä*/
+/*2. ì •ë‹µ*/
 data work.cust_type ;
 	set work.order_sort2;
 	by Customer_ID Order_type;
 
-	if first.order_type =1 then do; /*°¡Àå ³·Àº ±×·ìº¯¼ö¸¸*/
+	if first.order_type =1 then do; /*ê°€ì¥ ë‚®ì€ ê·¸ë£¹ë³€ìˆ˜ë§Œ*/
 		cnt2=0; total2=0;
 	end;
 
@@ -95,7 +95,7 @@ data work.cust_type ;
 	keep Customer_ID Order_Type cnt2 total2;
 run;
 
-/*1,2 ÇÑ¹ø¿¡ ÃßÃâ */
+/*1,2 í•œë²ˆì— ì¶”ì¶œ */
 data cust (keep = customer_id cnt1 total1) cust_type(keep=customer_id order_type cnt2 total2);
 	set order_sort2 ;
 	by customer_id order_type ;
@@ -118,7 +118,7 @@ run;
 
 
 /*==================[Chapter9]==================*/
-/*¹İº¹¹®Àå*/
+/*ë°˜ë³µë¬¸ì¥*/
 data compound;
 	amount = 50000 ;
 	rate = 0.045 ;
@@ -131,10 +131,10 @@ run;
 proc print data=compound noobs;
 run; 
 
-/*DO Loop ÀÛ¾÷*/
+/*DO Loop ì‘ì—…*/
 
 
-/*¹®Á¦ 6³â ¹İº¹ do loop »ç¿ë*/
+/*ë¬¸ì œ 6ë…„ ë°˜ë³µ do loop ì‚¬ìš©*/
 data forecast;
    set orion.growth;/*6obs*/
    do Year=1 to 6;
@@ -143,8 +143,8 @@ data forecast;
 	end;
 run;
 
-/*Á¶°ÇÀÌ ÂüÀÎ µ¿¾È ¹İº¹ do while*/
-/*300¸í ÀÌ»ó ÀÏ ¶§±îÁö ¹İº¹*/
+/*ì¡°ê±´ì´ ì°¸ì¸ ë™ì•ˆ ë°˜ë³µ do while*/
+/*300ëª… ì´ìƒ ì¼ ë•Œê¹Œì§€ ë°˜ë³µ*/
 data forecast;
    set orion.growth;/*6obs*/
    year =0 ;
@@ -157,7 +157,7 @@ data forecast;
 	end;
 run;
 
-/*do until ÂüÀÏ¶§ ±îÁö µ¹·Á¶ó*/ /*Àû¾îµµ ÇÑ¹øÀº ·çÇÁ¸¦ ½ÇÇàÇÏ°í Æò°¡ÇÔ*/
+/*do until ì°¸ì¼ë•Œ ê¹Œì§€ ëŒë ¤ë¼*/ /*ì ì–´ë„ í•œë²ˆì€ ë£¨í”„ë¥¼ ì‹¤í–‰í•˜ê³  í‰ê°€í•¨*/
 data forecast;
    set orion.growth;/*6obs*/
    year =0 ;
@@ -170,7 +170,7 @@ data forecast;
 	end;
 run;
 
-/*±¸±¸´Ü*/
+/*êµ¬êµ¬ë‹¨*/
 data test;
 	do i =1 to 9;
 		do j= 1 to 9;
@@ -184,21 +184,21 @@ run;
 data donations(drop= i) ;
 	set orion.employee_donations(keep=employee_id qtr1 qtr2 qtr3 qtr4);
 
-	array contrib[4] qtr1 qtr2 qtr3 qtr4 ;/*4°³ÀÇ º¯¼ö  ÇÏ³ªÀÇ array*/
+	array contrib[4] qtr1 qtr2 qtr3 qtr4 ;/*4ê°œì˜ ë³€ìˆ˜  í•˜ë‚˜ì˜ array*/
 	do i = 1 to 4;
 		contrib[i] = contrib[i] *1.25;
 	end;
 run;
-/*array sas º¯¼öµé¿¡ ´ëÇÑ ÀÓ½Ã ±×·ì*/
-/*°°Àº ¼Ó¼ºÀ» °°´Â º¯¼öµéÀ» ÇÏ³ªÀÇ array·Î*/
+/*array sas ë³€ìˆ˜ë“¤ì— ëŒ€í•œ ì„ì‹œ ê·¸ë£¹*/
+/*ê°™ì€ ì†ì„±ì„ ê°™ëŠ” ë³€ìˆ˜ë“¤ì„ í•˜ë‚˜ì˜ arrayë¡œ*/
 
 
 
-/*¸ğµç ¼ıÀÚº¯¼öÀÇ ¹Ì½Ì°ªÀ» 0À¸·Î Ç¥½Ã*/
+/*ëª¨ë“  ìˆ«ìë³€ìˆ˜ì˜ ë¯¸ì‹±ê°’ì„ 0ìœ¼ë¡œ í‘œì‹œ*/
 data donations(drop= i) ;
 	set orion.employee_donations(keep=employee_id qtr1-qtr4);
 
-	array contrib[*] _numeric_ ;/*4°³ÀÇ º¯¼ö  ÇÏ³ªÀÇ array*/
+	array contrib[*] _numeric_ ;/*4ê°œì˜ ë³€ìˆ˜  í•˜ë‚˜ì˜ array*/
 	do i = 1 to dim(contrib);
 		if contrib{i} =. then contrib{i} =0 ; 
 	end;
@@ -206,11 +206,11 @@ run;
 
 
 /*==================[Chapter10]==================*/
-/*ÀüÄ¡*/
+/*ì „ì¹˜*/
 proc transpose data=orion.employee_donations
 						out=work.trans1 (rename=(_name_=period col1=value)) ;
 		var qtr1-qtr4 ;
-		by Employee_ID ; /*ÀüÄ¡ ±âÁØ º¯¼ö*/
+		by Employee_ID ; /*ì „ì¹˜ ê¸°ì¤€ ë³€ìˆ˜*/
 run;
 
 proc transpose data=work.trans1 out=work.trans2 ;
@@ -219,23 +219,23 @@ proc transpose data=work.trans1 out=work.trans2 ;
 	id period ;
 run;
 
-/*ºóµµ freq*/
+/*ë¹ˆë„ freq*/
 proc freq data=orion.nonsales;
 	tables Country gender ;
-	tables country * gender / /*¿É¼Ç*/ out= work.country_gender ; /*Y*X*/
+	tables country * gender / /*ì˜µì…˜*/ out= work.country_gender ; /*Y*X*/
 run ;
 
-proc freq data=orion.nonsales /*À¯¿ë ¿É¼Ç*/order=freq nlevels;
+proc freq data=orion.nonsales /*ìœ ìš© ì˜µì…˜*/order=freq nlevels;
 	table job_title;
 run ;
 
-/* ¿ä¾àÅë°è·® : means */
-proc means data=orion.nonsales /*¿É¼Ç*/ n nmiss sum mean  ;
-	var salary ; /*ºĞ¼®º¯¼ö*/
-	class Country gender ; /*ºĞ·ùº¯¼ö : ~ º°·Î*/
+/* ìš”ì•½í†µê³„ëŸ‰ : means */
+proc means data=orion.nonsales /*ì˜µì…˜*/ n nmiss sum mean  ;
+	var salary ; /*ë¶„ì„ë³€ìˆ˜*/
+	class Country gender ; /*ë¶„ë¥˜ë³€ìˆ˜ : ~ ë³„ë¡œ*/
 run;
 
-/*means µ¥ÀÌÅÍ ³»º¸³»±â*//*sql group by º¸´Ù ºü¸§*/
+/*means ë°ì´í„° ë‚´ë³´ë‚´ê¸°*//*sql group by ë³´ë‹¤ ë¹ ë¦„*/
 proc means data=orion.nonsales noprint nway;
  var salary;
  class country gender ;
